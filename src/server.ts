@@ -25,6 +25,7 @@ const port = process.env.PORT || 3000;
     dbName: 'my-db-name',
     type: 'postgresql',
   };
+  // TODO: There's a bug with Mikro and postgresqldriver
   DI.orm = await MikroORM.init(options);
   DI.em = DI.orm.em;
   DI.imageRepository = DI.orm.em.getRepository(Image);
@@ -32,7 +33,7 @@ const port = process.env.PORT || 3000;
 
   app.use(express.json());
   app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
-  app.get('/', (req, res) => res.json({ message: 'Welcome to MikroORM express TS example, try CRUD on /author and /book endpoints!' }));
+  app.get('/', (req, res) => res.json({ message: 'Welcome to MikroORM express TS example!' }));
   app.use('/image', ImageController);
   app.use('/tag', TagController);
   app.use((req, res) => res.status(404).json({ message: 'No route found' }));
