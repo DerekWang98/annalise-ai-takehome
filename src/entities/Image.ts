@@ -1,0 +1,22 @@
+import { Cascade, Collection, Entity, OneToMany, Property, ManyToOne, PrimaryKey } from '@mikro-orm/core';
+import { BaseEntity } from './BaseEntity';
+import { Tag } from './Tag';
+
+@Entity()
+export class Image extends BaseEntity {
+
+  @Property()
+  name: string;
+
+  @Property()
+  userEmail: string;
+
+  @OneToMany(() => Tag, b => b.tag, { cascade: [Cascade.ALL] })
+  tags = new Collection<Tag>(this);
+
+  constructor(name: string, userEmail: string) {
+    super();
+    this.name = name;
+    this.userEmail = userEmail;
+  }
+}
