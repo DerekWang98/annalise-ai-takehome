@@ -11,7 +11,7 @@ export class Image extends BaseEntity {
   @Property()
   userEmail: string;
 
-  @OneToMany(() => Tag, b => b.tag, { cascade: [Cascade.ALL] })
+  @OneToMany({entity: () => Tag, mappedBy: 'image', orphanRemoval: false})
   tags = new Collection<Tag>(this);
 
   constructor(name: string, userEmail: string) {
