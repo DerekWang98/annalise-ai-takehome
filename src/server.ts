@@ -6,6 +6,7 @@ import { ImageController } from './controller/image.controller';
 import { TagController } from './controller/tag.controller';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { MikroORM, Options, EntityManager, EntityRepository, RequestContext } from '@mikro-orm/core';
+import options from './mikro-orm.config';
 
 export const DI = {} as {
   orm: MikroORM,
@@ -18,15 +19,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 (async () => {
-  const options: Options<PostgreSqlDriver> = {
-    driver: PostgreSqlDriver,
-    entities: ['./dist/entities'], // path to our JS entities (dist), relative to `baseDir`
-    entitiesTs: ['./src/entities'], // path to our TS entities (src), relative to `baseDir`
-    dbName: 'my-db-name',
-    type: 'postgresql',
-  };
-  // TODO: There's a bug with Mikro and postgresqldriver
-  DI.orm = await MikroORM.init(options);
+  DI.orm = await MikroORM.init<PostgreSqlDriver>(options);
   DI.em = DI.orm.em;
   DI.imageRepository = DI.orm.em.getRepository(Image);
   DI.tagRepository = DI.orm.em.getRepository(Tag);
