@@ -7,7 +7,9 @@
     "build": "npx tsc",
     "start": "node dist/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
-    "migrate-init": "npx mikro-orm migration:create --initial --path src/migrations"
+    "create-migration": "npx mikro-orm migration:create --path src/migrations",
+    "migrate-up": "npx mikro-orm migration:up",
+    "drop-and-migrate-up": "npx mikro-orm migration:fresh"
   },
   "repository": {
     "type": "git",

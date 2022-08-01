@@ -9,6 +9,9 @@ const options: Options<PostgreSqlDriver> =  {
   clientUrl: 'postgresql://postgres@localhost:55432',
   password: 'postgres',
   type: 'postgresql',
+  migrations: {
+    snapshot: false
+  }
 };
 
 export default options;
