@@ -11,12 +11,16 @@ export class Image extends BaseEntity {
   @Property()
   userEmail: string;
 
-  @OneToMany({entity: () => Tag, mappedBy: 'image', orphanRemoval: false})
+  @Property()
+  imagePath: string;
+
+  @OneToMany({ entity: () => Tag, mappedBy: 'image', orphanRemoval: false })
   tags = new Collection<Tag>(this);
 
-  constructor(name: string, userEmail: string) {
+  constructor(name: string, userEmail: string, imagePath: string) {
     super();
     this.name = name;
     this.userEmail = userEmail;
+    this.imagePath = imagePath;
   }
 }

@@ -49,14 +49,14 @@ router.post('/', async (req: Request, res: Response) => {
     {
       name: Joi.string().required(),
       userEmail: Joi.string().email().required(),
+      imagePath: Joi.string().required(),
       tags: Joi.array().items(tagSchema).required()
     }
   )
   validateJSONBody(req.body, imageSchema);
 
   try {
-
-    const image = new Image(req.body.name, req.body.userEmail);
+    const image = new Image(req.body.name, req.body.userEmail, req.body.imagePath);
     await DI.imageRepository.persist(image);
 
     const addTag = async (tagInfo: TagReq) => {

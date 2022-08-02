@@ -41,7 +41,8 @@
   },
   "devDependencies": {
     "concurrently": "^7.3.0",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "ts-node": "10.9.1"
   },
   "mikro-orm": {
     "useTsNode": true,
