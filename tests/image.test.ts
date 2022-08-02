@@ -1,11 +1,8 @@
 import { assert } from "chai";
 import { request } from "supertest";
 import { app } from "../src/server";
-const port = process.env.PORT || 3000;
-const url = 'http://localhost:'.concat(port.toString());
 
-
-let imageId = 0;
+// TODO: may not be working, fix later
 describe('Image API Routes', function () {
 
   const passReqBody = {

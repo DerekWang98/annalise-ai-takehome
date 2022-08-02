@@ -5,7 +5,7 @@ import { Tag } from './entities/Tag';
 import { ImageController } from './controller/image.controller';
 import { TagController } from './controller/tag.controller';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
-import { MikroORM, Options, EntityManager, EntityRepository, RequestContext } from '@mikro-orm/core';
+import { MikroORM, EntityManager, EntityRepository, RequestContext } from '@mikro-orm/core';
 import options from './mikro-orm.config';
 
 export const DI = {} as {
@@ -35,3 +35,6 @@ const port = process.env.PORT || 3000;
     console.log(`MikroORM express TS example started at http://localhost:${port}`);
   });
 })();
+
+// Testing purposes
+export { app };

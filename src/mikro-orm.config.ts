@@ -10,6 +10,7 @@ const options: Options<PostgreSqlDriver> =  {
   password: 'postgres',
   type: 'postgresql',
   migrations: {
+    path: './src/migrations',
     snapshot: false
   }
 };
