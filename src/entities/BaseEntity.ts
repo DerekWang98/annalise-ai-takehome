@@ -1,17 +1,13 @@
-import { PrimaryKey, Property, SerializedPrimaryKey } from '@mikro-orm/core';
+import { PrimaryKey, Property } from '@mikro-orm/core';
 
 export abstract class BaseEntity {
 
   @PrimaryKey()
-  _id!: number;
+  id!: number;
 
-  @SerializedPrimaryKey()
-  id!: string;
-
-  @Property()
+  @Property({ columnType: 'timestamp' })
   createdAt = new Date();
 
-  @Property({ onUpdate: () => new Date() })
+  @Property({ columnType: 'timestamp', onUpdate: () => new Date() })
   updatedAt = new Date();
-
 }
