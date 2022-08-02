@@ -9,16 +9,16 @@ export class Tag extends BaseEntity {
   @Property()
   name: string;
 
-  @ManyToOne(() => Image)
-  image?: Image;
-
   @Property()
   value: string;
 
-  constructor(name: string, image: Image, value: string) {
+  @ManyToOne(() => Image)
+  image?: Image;
+
+  constructor(name: string, value: string, image: Image ) {
     super();
     this.name = name;
-    this.image = image;
     this.value = value;
+    this.image = image;
   }
 }
