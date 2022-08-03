@@ -58,9 +58,9 @@ router.post('/', async (req: Request, res: Response) => {
       tags: Joi.array().items(tagSchema).required()
     }
   )
-  validateJSONBody(req.body, imageSchema);
 
   try {
+    validateJSONBody(req.body, imageSchema);
     const image = new Image(req.body.name, req.body.userEmail, req.body.imagePath);
     await DI.imageRepository.persist(image);
 
