@@ -2,8 +2,61 @@ import { assert } from "chai";
 import { request } from "supertest";
 import { app } from "../src/server";
 
-// TODO: may not be working, fix later
+// STUBS for tests, does not work, fix later
 describe('Image API Routes', function () {
+
+  describe('GET /image/:id', function () {
+    it('Gets a presigned URL from the AWS S3 Bucket', function (done: Mocha.Done) {
+      request(app)
+        .post(`/image/${__dirname.concat('testImage.gif')}`)
+        .expect(200)
+        .then(response => {
+          assert.isObject(response.body);
+          done();
+        })
+    })
+  });
+
+  describe('GET /image/details', function () {
+    it('Get an image info and all of its tags', function (done: Mocha.Done) {
+      request(app)
+        .post('/image/details')
+        .expect(200)
+        .then(response => {
+          assert.isObject(response.body);
+          done();
+        })
+    })
+  });
+
+  describe('GET /image/details/:id', function () {
+    it('Get an image info and all of its tags', function (done: Mocha.Done) {
+      request(app)
+        .post(`/image/details/${imageId}`)
+        .expect(200)
+        .then(response => {
+          assert.isObject(response.body);
+          assert.strictEqual(response.body.name, passReqBody.name, 'name field is strictly equal');
+          assert.strictEqual(response.body.userEmail, passReqBody.userEmail, 'userEmail field is strictly equal');
+          assert.isArray(response.body.tags, 'tags should be an array');
+          done();
+        })
+    })
+  })
+
+  describe('GET /image/details/:id', function () {
+    it('When image ID does not exist', function (done: Mocha.Done) {
+      request(app)
+        .post(`/image/details/${1000}`)
+        .expect(400)
+        .end(function (err, res) {
+          if (err) {
+            console.log(res);
+          }
+          done();
+        })
+    })
+  });
 
   describe('POST /image', function () {
     it('Send an image into an AWS S3 Bucket', function (done: Mocha.Done) {
@@ -17,7 +70,7 @@ describe('Image API Routes', function () {
         })
     })
   });
-  
+
   const passReqBody = {
     name: "Derek",
     userEmail: "derek123",
@@ -59,47 +112,6 @@ describe('Image API Routes', function () {
           if (err) {
             console.log(res);
           }
-          done();
-        })
-    })
-  });
-
-  describe('GET /image/tags/:id', function () {
-    it('Get an image info and all of its tags', function (done: Mocha.Done) {
-      request(app)
-        .post(`/image/tags/${imageId}`)
-        .expect(200)
-        .then(response => {
-          assert.isObject(response.body);
-          assert.strictEqual(response.body.name, passReqBody.name, 'name field is strictly equal');
-          assert.strictEqual(response.body.userEmail, passReqBody.userEmail, 'userEmail field is strictly equal');
-          assert.isArray(response.body.tags, 'tags should be an array');
-          done();
-        })
-    })
-  })
-
-  describe('GET /image/tags/:id', function () {
-    it('When image ID does not exist', function (done: Mocha.Done) {
-      request(app)
-        .post(`/image/tags/${1000}`)
-        .expect(400)
-        .end(function (err, res) {
-          if (err) {
-            console.log(res);
-          }
-          done();
-        })
-    })
-  });
-
-  describe('GET /image/tags', function () {
-    it('Get an image info and all of its tags', function (done: Mocha.Done) {
-      request(app)
-        .post('/image/tags')
-        .expect(400)
-        .then(response => {
-          assert.isObject(response.body);
           done();
         })
     })
