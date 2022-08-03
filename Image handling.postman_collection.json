@@ -1,0 +1,193 @@
+{
+	"info": {
+		"_postman_id": "b3e9ebc5-105e-4d38-9ce0-56cc0099edbb",
+		"name": "Image handling",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22088211"
+	},
+	"item": [
+		{
+			"name": "Image",
+			"item": [
+				{
+					"name": "/image/:id [STUB]",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{origin}}/image/:id",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"image",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/image/details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{origin}}/image/details",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"image",
+								"details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/image/details/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{origin}}/image/details/:id",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"image",
+								"details",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/image/:id [STUB]",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{origin}}/image/:id",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"image",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/image/details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Derek\",\r\n    \"userEmail\": \"derek@gmail.com\",\r\n    \"imagePath\": \"AWSBUCKET/dateTime/filename\",\r\n    \"tags\": [\r\n        {\r\n            \"name\": \"A tag\",\r\n            \"value\": \"A value\"\r\n        },\r\n        {\r\n            \"name\": \"2nd tag\",\r\n            \"value\": \"2nd value\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/image/details",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"image",
+								"details"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "/tag",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{origin}}/tag",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"tag"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{origin}}/tag/:id",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"tag",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{origin}}",
+					"host": [
+						"{{origin}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
