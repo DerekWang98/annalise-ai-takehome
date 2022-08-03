@@ -10,29 +10,35 @@ import { validateJSONBody } from '../common';
 
 const router = Router();
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/tags', async (req: Request, res: Response) => {
+  // Returns the all image information and its corresponding tags.
   const images = await DI.imageRepository.findAll({ populate: ['tags'] });
   res.json(images);
 });
 
-// router.get('/:id', async (req: Request, res: Response) => {
-//   try {
-//     const image = await DI.imageRepository.findOne(req.params.id, { populate: ['tags']});
-
-//     if (!image) {
-//       return res.status(404).json({ message: 'Image not found' });
-//     }
-
-//     res.json(image);
-//   } catch (e) {
-//     if (e instanceof Error) {
-//       return res.status(400).json({ message: e.message });
-//     }
-//     else {
-//       console.log('Unexpected error', e);
-//     }
-//   }
-// });
+router.get('/tags/:id', async (req: Request, res: Response) => {
+  // Returns a single image's information and its tags.
+  const schema = Joi.object(
+    {
+      id: Joi.number().required()
+    }
+  )
+  validateJSONBody(req.params, schema);
+  try {
+    const image = await DI.imageRepository.findOne(+req.params['id'], { populate: ['tags']});
+    if (!image) {
+      return res.status(404).json({ message: 'Image not found' });
+    }
+    res.json(image);
+  } catch (e) {
+    if (e instanceof Error) {
+      return res.status(400).json({ message: e.message });
+    }
+    else {
+      console.log('Unexpected error', e);
+    }
+  }
+});
 
 router.post('/', async (req: Request, res: Response) => {
   if (!req.body.name || !req.body.userEmail || !req.body.tags) {
@@ -83,27 +89,5 @@ router.post('/', async (req: Request, res: Response) => {
     }
   }
 });
-
-// router.put('/:id', async (req: Request, res: Response) => {
-//   try {
-//     const image = await DI.imageRepository.findOne(req.params.id);
-
-//     if (!image) {
-//       return res.status(404).json({ message: 'Image not found' });
-//     }
-
-//     wrap(image).assign(req.body);
-//     await DI.imageRepository.persist(image);
-
-//     res.json(image);
-//   } catch (e) {
-//     if (e instanceof Error) {
-//       return res.status(400).json({ message: e.message });
-//     }
-//     else {
-//       console.log('Unexpected error', e);
-//     }
-//   }
-// });
 
 export const ImageController = router;
