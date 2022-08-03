@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import Router from 'express-promise-router';
-import { wrap } from '@mikro-orm/core';
 import { DI } from '../server';
 import { Image } from '../entities/Image';
 import { Tag } from '../entities';

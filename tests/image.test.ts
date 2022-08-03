@@ -19,10 +19,10 @@ describe('Image API Routes', function () {
     ]
   }
   let imageId = 0;
-  describe('POST /image', function () {
+  describe('POST /image/:filePath', function () {
     it('creates a successful entry in the image table', function (done: Mocha.Done) {
       request(app)
-        .post('/image')
+        .post(`/image/${__dirname.concat('testImage.gif')}`)
         .send(passReqBody)
         .expect(200)
         .then(response => {
@@ -34,10 +34,10 @@ describe('Image API Routes', function () {
   });
 
   const failReqBody = { ...passReqBody, randomField: "abc" }
-  describe('POST /image', function () {
+  describe('POST /image/:filePath', function () {
     it('invalid request body', function (done: Mocha.Done) {
       request(app)
-        .post('/image')
+        .post(`/image/${__dirname.concat('testImage.gif')}`)
         .send(failReqBody)
         .expect(400)
         .end(function (err, res) {
