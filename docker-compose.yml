@@ -12,6 +12,26 @@ services:
       POSTGRES_DB: image_storage
       POSTGRES_HOST: localhost
     ports:
-      - '55432:5432'
+      - "55432:5432"
     volumes:
       - pg-data:/var/lib/postgresql/data
+
+  imageHandling:
+    image: node:14-alpine
+    volumes:
+      - ./:/src
+    working_dir: /src
+    command: >
+      sh -c "npm run migrate-up
+      && npm run dev"
+    environment:
+      CLIENT_URL: $CLIENT_URL
+      DB_NAME: $DB_NAME
+      DB_PASSWORD: $DB_PASSWORD
+      PORT: "${PORT:-3000}"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"

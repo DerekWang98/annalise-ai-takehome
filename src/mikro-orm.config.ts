@@ -5,9 +5,9 @@ const options: Options<PostgreSqlDriver> =  {
   driver: PostgreSqlDriver,
   entities: ['./dist/entities'], // path to our JS entities (dist), relative to `baseDir`
   entitiesTs: ['./src/entities'], // path to our TS entities (src), relative to `baseDir`
-  dbName: 'image_storage',
-  clientUrl: 'postgresql://postgres@localhost:55432',
-  password: 'postgres',
+  dbName: process.env.DB_NAME,
+  clientUrl: process.env.CLIENT_URL,
+  password: process.env.DB_PASSWORD,
   type: 'postgresql',
   migrations: {
     path: './src/migrations',
