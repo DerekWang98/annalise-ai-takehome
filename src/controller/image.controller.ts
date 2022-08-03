@@ -9,21 +9,38 @@ import { validateJSONBody } from '../common';
 
 const router = Router();
 
-router.get('/tags', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
+  // STUB (Does not work): Gets a file from an AWS bucket.
+  try {
+    // 1) Validate imagePath is string
+    // 2) Get a presigned URL from AWS that will expire after X time.
+    // 3) Redirect the user to this URL.
+
+  } catch (e) {
+    if (e instanceof Error) {
+      return res.status(400).json({ message: e.message });
+    }
+    else {
+      console.log('Unexpected error', e);
+    }
+  }
+});
+
+router.get('/details', async (req: Request, res: Response) => {
   // Returns the all image information and its corresponding tags.
   const images = await DI.imageRepository.findAll({ populate: ['tags'] });
   res.json(images);
 });
 
-router.get('/tags/:id', async (req: Request, res: Response) => {
+router.get('/details/:id', async (req: Request, res: Response) => {
   // Returns a single image's information and its tags.
   const schema = Joi.object(
     {
       id: Joi.number().required()
     }
   )
-  validateJSONBody(req.params, schema);
   try {
+    validateJSONBody(req.params, schema);
     const image = await DI.imageRepository.findOne(+req.params['id'], { populate: ['tags']});
     if (!image) {
       return res.status(404).json({ message: 'Image not found' });
@@ -40,16 +57,28 @@ router.get('/tags/:id', async (req: Request, res: Response) => {
 });
 
 router.post('/', async (req: Request, res: Response) => {
-  if (!req.body.name || !req.body.userEmail || !req.body.tags) {
-    res.status(400);
-    return res.json({ message: 'One of `name, email` is missing' });
+  // STUB (Does not work): Sends a file to an AWS bucket.
+  try {
+    // 1) Validate image
+    // 2) Santise image name and add a timestamp to uniquely identify the image
+    // 3) Send file to AWS S3 Bucket and return the AWS Bucket path
+  } catch (e) {
+    if (e instanceof Error) {
+      return res.status(400).json({ message: e.message });
+    }
+    else {
+      console.log('Unexpected error', e);
+    }
   }
+});
 
-  const tagSchema = Joi.object({
+router.post('/details', async (req: Request, res: Response) => {
+  const tagSchema = Joi.object(
+    {
     name: Joi.string().required(),
     value: Joi.string().required()
-  })
-
+    }
+  )
   const imageSchema = Joi.object(
     {
       name: Joi.string().required(),
