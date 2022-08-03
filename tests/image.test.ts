@@ -4,11 +4,9 @@ import { app } from "../src/server";
 
 // TODO: may not be working, fix later
 describe('Image API Routes', function () {
-
   const passReqBody = {
     name: "Derek",
     userEmail: "derek123",
-    imagePath: "/datetime/imagePathInAWSS3Bucket",
     tags: [
       {
         name: "A tag",
@@ -20,7 +18,6 @@ describe('Image API Routes', function () {
       }
     ]
   }
-
   let imageId = 0;
   describe('POST /image', function () {
     it('creates a successful entry in the image table', function (done: Mocha.Done) {
@@ -30,14 +27,13 @@ describe('Image API Routes', function () {
         .expect(200)
         .then(response => {
           imageId = response.body.image.id;
-          assert.isObject(response);
+          assert.isObject(response.body);
           done();
         })
     });
   });
 
   const failReqBody = { ...passReqBody, randomField: "abc" }
-
   describe('POST /image', function () {
     it('invalid request body', function (done: Mocha.Done) {
       request(app)
@@ -52,4 +48,46 @@ describe('Image API Routes', function () {
         })
     })
   });
+
+  describe('GET /image/tags/:id', function () {
+    it('Get an image info and all of its tags', function (done: Mocha.Done) {
+      request(app)
+        .post(`/image/tags/${imageId}`)
+        .expect(200)
+        .then(response => {
+          assert.isObject(response.body);
+          assert.strictEqual(response.body.name, passReqBody.name, 'name field is strictly equal');
+          assert.strictEqual(response.body.userEmail, passReqBody.userEmail, 'userEmail field is strictly equal');
+          assert.isArray(response.body.tags, 'tags should be an array');
+          done();
+        })
+    })
+  })
 });
+
+describe('GET /image/tags/:id', function () {
+  it('When image ID does not exist', function (done: Mocha.Done) {
+    request(app)
+      .post(`/image/tags/${1000}`)
+      .expect(400)
+      .end(function (err, res) {
+        if (err) {
+          console.log(res);
+        }
+        done();
+      })
+  })
+});
+
+describe('GET /image/tags', function () {
+  it('Get an image info and all of its tags', function (done: Mocha.Done) {
+    request(app)
+      .post('/image/tags')
+      .expect(400)
+      .then(response => {
+        assert.isObject(response.body);
+        done();
+      })
+  })
+});
+
