@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import request from "supertest";
-import { app, server} from "../server";
+import { app, server } from "../server";
 
 describe('Image API Routes', function () {
 
@@ -17,7 +17,7 @@ describe('Image API Routes', function () {
     });
   });
 
-    // STUB
+  // STUB
   describe('POST /image', function () {
     it('Send an image into an AWS S3 Bucket', function (done: Mocha.Done) {
       done();

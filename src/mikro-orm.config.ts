@@ -3,7 +3,7 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 const dotenv = require('dotenv');
 dotenv.config();
 
-const options: Options<PostgreSqlDriver> =  {
+const options: Options<PostgreSqlDriver> = {
   driver: PostgreSqlDriver,
   entities: ['./dist/entities'], // path to our JS entities (dist), relative to `baseDir`
   entitiesTs: ['./src/entities'], // path to our TS entities (src), relative to `baseDir`

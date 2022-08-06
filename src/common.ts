@@ -5,4 +5,4 @@ export const validateJSONBody = (jsonBody: Object, schema: Joi.ObjectSchema) => 
   if (error != null) {
     throw new Error('Request JSON body is invalid');
   }
- }
+}

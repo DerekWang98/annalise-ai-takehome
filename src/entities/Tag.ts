@@ -1,4 +1,4 @@
-import { Cascade, Collection, Entity, OneToMany, Property, ManyToOne } from '@mikro-orm/core';
+import { Entity, Property, ManyToOne } from '@mikro-orm/core';
 
 import { BaseEntity } from './BaseEntity';
 import { Image } from './Image'
@@ -15,7 +15,7 @@ export class Tag extends BaseEntity {
   @ManyToOne(() => Image)
   image?: Image;
 
-  constructor(name: string, value: string, image: Image ) {
+  constructor(name: string, value: string, image: Image) {
     super();
     this.name = name;
     this.value = value;
