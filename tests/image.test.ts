@@ -12,7 +12,9 @@ describe('Image API Routes', function () {
   });
 
   after(done => {
-    server.close(done);
+    server.close(() => {
+      done();
+    });
   });
 
     // STUB

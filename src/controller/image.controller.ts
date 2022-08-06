@@ -28,8 +28,17 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.get('/details', async (req: Request, res: Response) => {
   // Returns the all image information and its corresponding tags.
-  const images = await DI.imageRepository.findAll({ populate: ['tags'] });
-  res.json(images);
+  try {
+    const images = await DI.imageRepository.findAll({ populate: ['tags'] });
+    res.json(images);
+  } catch (e) {
+    if (e instanceof Error) {
+      return res.status(400).json({ message: e.message });
+    }
+    else {
+      console.log('Unexpected error', e);
+    }
+  }
 });
 
 router.get('/details/:id', async (req: Request, res: Response) => {
@@ -41,7 +50,7 @@ router.get('/details/:id', async (req: Request, res: Response) => {
   )
   try {
     validateJSONBody(req.params, schema);
-    const image = await DI.imageRepository.findOne(+req.params['id'], { populate: ['tags']});
+    const image = await DI.imageRepository.findOne(+req.params['id'], { populate: ['tags'] });
     if (!image) {
       return res.status(404).json({ message: 'Image not found' });
     }
@@ -75,8 +84,8 @@ router.post('/', async (req: Request, res: Response) => {
 router.post('/details', async (req: Request, res: Response) => {
   const tagSchema = Joi.object(
     {
-    name: Joi.string().required(),
-    value: Joi.string().required()
+      name: Joi.string().required(),
+      value: Joi.string().required()
     }
   )
   const imageSchema = Joi.object(
@@ -107,7 +116,7 @@ router.post('/details', async (req: Request, res: Response) => {
     await DI.imageRepository.flush();
     await DI.tagRepository.flush();
 
-    res.json({image: image});
+    res.json({ image: image });
   } catch (e) {
     if (e instanceof Error) {
       return res.status(400).json({ message: e.message });
