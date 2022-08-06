@@ -1,2 +1,2 @@
-require('./test/image.test.ts')
-require('./test/tag.test.ts')
+require('./tests/image.test.ts')
+require('./tests/tag.test.ts')

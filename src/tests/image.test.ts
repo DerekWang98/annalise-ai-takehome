@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import request from "supertest";
-import { app, server} from "../src/server";
+import { app, server} from "../server";
 
 describe('Image API Routes', function () {
 

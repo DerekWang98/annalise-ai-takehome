@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import request from "supertest";
-import { app, server} from "../src/server";
+import { app, server } from "../server";
 
 describe('Tag API Routes', function () {
 
@@ -24,10 +24,10 @@ describe('Tag API Routes', function () {
   }
 
   let tagId = 0;
-  describe('POST /tag/details', function () {
+  describe('POST /tag', function () {
     it('creates a successful entry in the tag table', function (done: Mocha.Done) {
       request(app)
-        .post(`/tag/details`)
+        .post(`/tag`)
         .send(passReqBody)
         .expect(200)
         .then(response => {
@@ -40,10 +40,10 @@ describe('Tag API Routes', function () {
   });
 
   const failReqBody = { ...passReqBody, randomField: "abc" }
-  describe('POST /tag/details', function () {
+  describe('POST /tag', function () {
     it('invalid request body', function (done: Mocha.Done) {
       request(app)
-        .post(`/tag/details`)
+        .post(`/tag`)
         .send(failReqBody)
         .expect(400)
         .end(function (err, res) {
@@ -62,9 +62,9 @@ describe('Tag API Routes', function () {
         .expect(200)
         .then(response => {
           assert.isArray(response.body, "Body should contain an array of tag details");
-          assert.isObject(response.body[0], "Response should be an object");
-          assert.strictEqual(response.body[0].name, passReqBody.name, 'assert tag name');
-          assert.strictEqual(response.body[0].value, passReqBody.value, 'assert tag value');
+          assert.isObject(response.body[response.body.length - 1], "Response should be an object");
+          assert.strictEqual(response.body[response.body.length - 1].name, passReqBody.name, 'assert tag name');
+          assert.strictEqual(response.body[response.body.length - 1].value, passReqBody.value, 'assert tag value');
           done();
         })
         .catch(err => done(err))

@@ -10,7 +10,7 @@
     "create-migration": "npx mikro-orm migration:create --path src/migrations",
     "migrate-up": "npx mikro-orm migration:up",
     "drop-and-migrate-up": "npx mikro-orm migration:fresh",
-    "test": "npx mocha --timeout 5000 --exit -r ts-node/register tests/**/*.test.ts"
+    "test": "npx mocha --timeout 5000 --exit -r ts-node/register src/test.ts"
   },
   "repository": {
     "type": "git",
