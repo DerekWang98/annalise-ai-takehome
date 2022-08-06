@@ -1,17 +1,24 @@
 import { Request, Response } from 'express';
 import Router from 'express-promise-router';
-import { QueryOrder, wrap } from '@mikro-orm/core';
-
 import { DI } from '../server';
-import { Tag } from '../entities/Tag';
 import Joi from 'joi';
 import { validateJSONBody } from '../common';
+import { Tag } from '../entities';
 
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  const tags = await DI.tagRepository.findAll({ populate: ['image']});
-  res.json(tags);
+  try {
+    const tags = await DI.tagRepository.findAll({ populate: ['image'] });
+    res.json(tags);
+  } catch (e) {
+    if (e instanceof Error) {
+      return res.status(400).json({ message: e.message });
+    }
+    else {
+      console.log('Unexpected error', e);
+    }
+  }
 });
 
 router.get('/:id', async (req: Request, res: Response) => {
@@ -28,6 +35,35 @@ router.get('/:id', async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Tag not found' });
     }
     res.json(tag);
+  } catch (e) {
+    if (e instanceof Error) {
+      return res.status(400).json({ message: e.message });
+    }
+    else {
+      console.log('Unexpected error', e);
+    }
+  }
+});
+
+router.post('/', async (req: Request, res: Response) => {
+  const schema = Joi.object(
+    {
+      name: Joi.string().required(),
+      value: Joi.string().required(),
+      imageId: Joi.number().integer().required(),
+    }
+  )
+
+  try {
+    validateJSONBody(req.body, schema);
+    const image = await DI.imageRepository.findOne(+req.body['imageId']);
+    if (!image) {
+      return res.status(404).json({ message: 'Image not found' });
+    }
+    const tag = new Tag(req.body.name, req.body.value, image);
+
+    await DI.tagRepository.persistAndFlush(tag);
+    res.json({ tag: tag });
   } catch (e) {
     if (e instanceof Error) {
       return res.status(400).json({ message: e.message });

@@ -172,6 +172,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "/tag",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"name a\",\r\n    \"value\": \"value b\",\r\n    \"imageId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/tag",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"tag"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

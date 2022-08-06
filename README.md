@@ -14,7 +14,7 @@ npm install
 docker-compose up -d
 ```
 
-4. Once the docker containers are running, you can access the Express API on [localhost:3000](http://localhost:3000). You can find the routes by uploading `Image handling.postman_collection.json` to [Postman](https://www.postman.com/).
+4. Once the docker containers are running, you can access the Express API on [localhost:3000](http://localhost:3000). You can find the routes by uploading `Image handling.postman_collection.json` to [Postman](https://www.postman.com/) and create an environment variable called `origin` with the value of `http://localhost:3000`.
 
 ## 💡 How to run tests?
 You do not need to start the Express server for testing. Mocha will run the server before testing.
