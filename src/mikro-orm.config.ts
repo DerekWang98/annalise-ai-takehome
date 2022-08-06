@@ -1,5 +1,7 @@
 import { Options } from '@mikro-orm/core';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
+const dotenv = require('dotenv');
+dotenv.config();
 
 const options: Options<PostgreSqlDriver> =  {
   driver: PostgreSqlDriver,

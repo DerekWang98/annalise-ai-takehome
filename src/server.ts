@@ -7,6 +7,10 @@ import { TagController } from './controller/tag.controller';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { MikroORM, EntityManager, EntityRepository, RequestContext } from '@mikro-orm/core';
 import options from './mikro-orm.config';
+import process from 'process';
+import http from 'http';
+const dotenv = require('dotenv');
+dotenv.config();
 
 export const DI = {} as {
   orm: MikroORM,
@@ -15,8 +19,20 @@ export const DI = {} as {
   tagRepository: EntityRepository<Tag>,
 };
 
+const validteEnvVars = (envVar: string, errorMsg: string) => {
+  if (process.env[envVar] == null) {
+    throw new Error(`ERROR: ${errorMsg}`)
+  }
+}
+
+validteEnvVars('PORT', 'Provide PORT environment variable for the Postgres database');
+validteEnvVars('CLIENT_URL', 'Provide CLIENT_URL environment variable for the Postgres database');
+validteEnvVars('DB_NAME', 'Provide DB_NAME environment variable for the Postgres database');
+validteEnvVars('DB_PASSWORD', 'Provide DB_PASSWORD environment variable for the Postgres database');
+
 const app = express();
 const port = process.env.PORT || 3000;
+let server: http.Server;
 
 (async () => {
   DI.orm = await MikroORM.init<PostgreSqlDriver>(options);
@@ -31,10 +47,10 @@ const port = process.env.PORT || 3000;
   app.use('/tag', TagController);
   app.use((req, res) => res.status(404).json({ message: 'No route found' }));
 
-  app.listen(port, () => {
+  server = app.listen(port, () => {
     console.log(`MikroORM express TS example started at http://localhost:${port}`);
   });
 })();
 
 // Testing purposes
-export { app };
+export { app, server };
