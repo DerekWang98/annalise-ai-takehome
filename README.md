@@ -48,7 +48,7 @@ For local development, to drop the database and migrate up, use:
 npm run drop-and-migrate-up
 ```
 
-## 🌟 What's missing / Future work!
+## ❓ What's missing / Future work!
 
 ### Image Storage
 I would use AWS S3 buckets to store these images and include a POST route in this backend service to upload. The filepaths of these images will be stored in the database to allow users to use a GET route to download the image they need.
@@ -64,7 +64,7 @@ As for uploading and downloading images, these are some other features to add to
 3. When downloading images, use presigned URLs that will expire in a set period of time. 
 
 
-## 🌟 Avoid downtime during deployments
+## 💭 Avoid downtime during deployments
 From quick google search, there are strategies out there to achieve virtually 0 downtime. Blue-green deployments work by creating identical environments and using a load balancer to route traffic 'green' (updated) environment. 
 
 An easier way is to reduce the likelihood of needing to deploy often by having a rigorous set of tests and testing features on a Staging/Dev environment that has very similar data to Production. 
